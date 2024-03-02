@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Converter</title>
+    <title>Conversor</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -12,52 +12,35 @@
         <h1>Conversor de Caralho</h1>
         <div class="input-group">
             <label for="conversionType">Escolha a porra da conversão:</label>
-            <select id="conversionType" onchange="changeLabels()">
-                <option value="normalize">RGB normalizado</option>
-                <option value="rgbToHsv">RGB para HSV</option>
-                <option value="hsvToRgb">HSV para RGB</option>
-                <option value="rgbToCmyk">RGB para CMYK</option>
-                <option value="rgbToCmyk">CMYK para RGB</option>
-                <option value="rgbToGrayscale">RGB para Escala de Cinza</option>
+            <select id="conversionType" onchange="updateConversionType()">
+                <option value="normaliza">RGB normalizado</option>
+                <option value="RGBpHSV">RGB para HSV</option>
+                <option value="HSVpRGB">HSV para RGB</option>
+                <option value="RGBpCMYK">RGB para CMYK</option>
+                <option value="CMYKpRGB">CMYK para RGB</option>
+                <option value="RGBpCINZA">RGB para Escala de Cinza</option>
             </select>
         </div>
         <div class="input-group">
             <label for="red">Red:</label>
-            <input type="number" id="red" min="0" max="255" oninput="limitInput(this)">
+            <input type="number" id="red" min="0" max="255" oninput="limitInput(this, document.getElementById('conversionType').value)">
         </div>
         <div class="input-group">
             <label for="green">Green:</label>
-            <input type="number" id="green" min="0" max="255" oninput="limitInput(this)">
+            <input type="number" id="green" min="0" max="255" oninput="limitInput(this, document.getElementById('conversionType').value)">
         </div>
         <div class="input-group">
             <label for="blue">Blue:</label>
-            <input type="number" id="blue" min="0" max="255" oninput="limitInput(this)">
+            <input type="number" id="blue" min="0" max="255" oninput="limitInput(this, document.getElementById('conversionType').value)">
         </div>
-        <button class="btConverte" onclick="convertColors()">Converter</button>
         <div id="result"></div>
+        <div class="input-group" id="blackInput" style="display: none;">
+            <label for="black">Black (%):</label>
+            <input type="number" id="black" min="0" max="100" oninput="limitInput(this, document.getElementById('conversionType').value)">
+        </div>
+        <button class="btConverte" onclick="convertColors()">Converter</button> 
     </div>
 
     <script src="/script.js"></script>
-    <script>
-        function changeLabels() {
-            var conversionType = document.getElementById("conversionType").value;
-            if (conversionType === "hsvToRgb") {
-                document.querySelector("label[for='red']").textContent = "H (°):";
-                document.querySelector("label[for='green']").textContent = "S (%):";
-                document.querySelector("label[for='blue']").textContent = "V (%):";
-            } else {
-                document.querySelector("label[for='red']").textContent = "Red:";
-                document.querySelector("label[for='green']").textContent = "Green:";
-                document.querySelector("label[for='blue']").textContent = "Blue:";
-            }
-        }
-
-        function limitInput(element) {
-            var value = parseInt(element.value);
-            if (value > 255) {
-                element.value = 255;
-            }
-        }
-    </script>
 </body>
 </html>
