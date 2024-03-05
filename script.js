@@ -16,7 +16,7 @@ function convertColors() {
         var normalizedRGB = normalizeRGB([red, green, blue]);
         
         document.getElementById('result').innerHTML = 
-            `RGB normalizado: ${normalizedRGB[0]}, ${normalizedRGB[1]}, ${normalizedRGB[2]}`;
+            `RGB normalizado: ${normalizedRGB[0]} | ${normalizedRGB[1]} | ${normalizedRGB[2]}`;
     } else if (conversionType === "rgbToHsv") {
         var red = parseInt(document.getElementById('red').value);
         var green = parseInt(document.getElementById('green').value);
@@ -32,7 +32,7 @@ function convertColors() {
         var hsv = RGBtoHSV(red, green, blue);
 
         document.getElementById('result').innerHTML = 
-            `HSV: ${hsv[0]}, ${hsv[1]}, ${hsv[2]}`;
+            `HSV: ${hsv[0]}° | ${hsv[1]}% | ${hsv[2]}%`;
     } else if (conversionType === "hsvToRgb") {
         var hue = parseFloat(document.getElementById('red').value);
         var saturation = parseFloat(document.getElementById('green').value);
@@ -48,7 +48,7 @@ function convertColors() {
         var rgb = HSVtoRGB(hue, saturation, value);
 
         document.getElementById('result').innerHTML = 
-            `RGB: ${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
+            `RGB: ${rgb[0]} | ${rgb[1]} | ${rgb[2]}`;
 
     } else if (conversionType === "rgbToCmyk") {
         var red = parseInt(document.getElementById('red').value);
@@ -61,20 +61,20 @@ function convertColors() {
             return;
         }
 
-        // Convert RGB to CMYK
+         // Convert RGB to CMYK
         var cmyk = RGBtoCMYK(red, green, blue);
 
+        // Arredonda os valores CMYK para números inteiros
+        var cmykRounded = cmyk.map(value => Math.round(value));
+
         document.getElementById('result').innerHTML = 
-            `CMYK: ${cmyk[0]}, ${cmyk[1]}, ${cmyk[2]}, ${cmyk[3]}`;
+            `CMYK: ${cmykRounded[0]}% | ${cmykRounded[1]}% | ${cmykRounded[2]}% | ${cmykRounded[3]}%`;
     } else if (conversionType === "CmykTorgb") {
         // Implementar a conversão de CMYK para RGB
     } else if (conversionType === "rgbToGrayscale") {
         // Implementar a conversão de RGB para Escala de Cinza
     }
 }
-
-
-
 
 
 function normalizeRGB(rgb) {
