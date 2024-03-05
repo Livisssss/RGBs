@@ -23,15 +23,15 @@
         </div>
         <div class="input-group">
             <label for="red">Red:</label>
-            <input type="number" id="red" min="0" max="255">
+            <input type="number" id="red" min="0" max="255" oninput="limitInput(this)">
         </div>
         <div class="input-group">
             <label for="green">Green:</label>
-            <input type="number" id="green" min="0" max="255">
+            <input type="number" id="green" min="0" max="255" oninput="limitInput(this)">
         </div>
         <div class="input-group">
             <label for="blue">Blue:</label>
-            <input type="number" id="blue" min="0" max="255">
+            <input type="number" id="blue" min="0" max="255" oninput="limitInput(this)">
         </div>
         <button class="btConverte" onclick="convertColors()">Converter</button>
         <div id="result"></div>
@@ -49,6 +49,13 @@
                 document.querySelector("label[for='red']").textContent = "Red:";
                 document.querySelector("label[for='green']").textContent = "Green:";
                 document.querySelector("label[for='blue']").textContent = "Blue:";
+            }
+        }
+
+        function limitInput(element) {
+            var value = parseInt(element.value);
+            if (value > 255) {
+                element.value = 255;
             }
         }
     </script>

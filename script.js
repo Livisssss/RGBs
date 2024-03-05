@@ -5,13 +5,12 @@ function convertColors() {
         var red = parseInt(document.getElementById('red').value);
         var green = parseInt(document.getElementById('green').value);
         var blue = parseInt(document.getElementById('blue').value);
-
-        // Verificar se os campos de entrada estão preenchidos corretamente
-        if (isNaN(red) || isNaN(green) || isNaN(blue)) {
-            alert("Por favor, insira valores numéricos válidos.");
-            return;
-        }
-
+    
+        // Limitar os valores a um máximo de 255
+        red = Math.min(red, 255);
+        green = Math.min(green, 255);
+        blue = Math.min(blue, 255);
+    
         // Normalize RGB values
         var normalizedRGB = normalizeRGB([red, green, blue]);
         
@@ -74,6 +73,29 @@ function convertColors() {
     } else if (conversionType === "rgbToGrayscale") {
         // Implementar a conversão de RGB para Escala de Cinza
     }
+
+    // Adiciona evento de escuta de entrada para os campos de entrada RGB
+    document.getElementById('red').addEventListener('input', function() {
+        var value = parseInt(this.value);
+        if (value > 255) {
+            this.value = 255;
+        }
+    });
+
+    document.getElementById('green').addEventListener('input', function() {
+        var value = parseInt(this.value);
+        if (value > 255) {
+            this.value = 255;
+        }
+    });
+
+    document.getElementById('blue').addEventListener('input', function() {
+        var value = parseInt(this.value);
+        if (value > 255) {
+            this.value = 255;
+        }
+    });
+
 }
 
 
