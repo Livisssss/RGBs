@@ -2,4 +2,4 @@
 
 <p>Adicione os valores e selecione a opção de conversão</p>
 
-<h2>Para funcionar, basta clicar no botão</h2>
+<p>Para funcionar, basta clicar no botão 'Converter'</p>
