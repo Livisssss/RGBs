@@ -42,9 +42,9 @@
         function changeLabels() {
             var conversionType = document.getElementById("conversionType").value;
             if (conversionType === "hsvToRgb") {
-                document.querySelector("label[for='red']").textContent = "H:";
-                document.querySelector("label[for='green']").textContent = "S:";
-                document.querySelector("label[for='blue']").textContent = "V:";
+                document.querySelector("label[for='red']").textContent = "H (%):";
+                document.querySelector("label[for='green']").textContent = "S (%):";
+                document.querySelector("label[for='blue']").textContent = "V (%):";
             } else {
                 document.querySelector("label[for='red']").textContent = "Red:";
                 document.querySelector("label[for='green']").textContent = "Green:";
