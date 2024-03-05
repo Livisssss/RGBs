@@ -16,7 +16,7 @@ function convertColors() {
         var normalizedRGB = normalizeRGB([red, green, blue]);
         
         document.getElementById('result').innerHTML = 
-            `Normalized RGB: ${normalizedRGB[0]}, ${normalizedRGB[1]}, ${normalizedRGB[2]}`;
+            `RGB normalizado: ${normalizedRGB[0]}, ${normalizedRGB[1]}, ${normalizedRGB[2]}`;
     } else if (conversionType === "rgbToHsv") {
         var red = parseInt(document.getElementById('red').value);
         var green = parseInt(document.getElementById('green').value);
@@ -49,8 +49,25 @@ function convertColors() {
 
         document.getElementById('result').innerHTML = 
             `RGB: ${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
+
     } else if (conversionType === "rgbToCmyk") {
-        // Implementar a conversão de RGB para CMYK
+        var red = parseInt(document.getElementById('red').value);
+        var green = parseInt(document.getElementById('green').value);
+        var blue = parseInt(document.getElementById('blue').value);
+
+        // Verificar se os campos de entrada estão preenchidos corretamente
+        if (isNaN(red) || isNaN(green) || isNaN(blue)) {
+            alert("Por favor, insira valores numéricos válidos para RGB.");
+            return;
+        }
+
+        // Convert RGB to CMYK
+        var cmyk = RGBtoCMYK(red, green, blue);
+
+        document.getElementById('result').innerHTML = 
+            `CMYK: ${cmyk[0]}, ${cmyk[1]}, ${cmyk[2]}, ${cmyk[3]}`;
+    } else if (conversionType === "CmykTorgb") {
+        // Implementar a conversão de CMYK para RGB
     } else if (conversionType === "rgbToGrayscale") {
         // Implementar a conversão de RGB para Escala de Cinza
     }
@@ -136,4 +153,17 @@ function HSVtoRGB(h, s, v) {
     var b = (rgbPrime[2] + m) * 255;
 
     return [Math.round(r), Math.round(g), Math.round(b)];
+}
+
+function RGBtoCMYK(r, g, b) {
+    var c = 1 - (r / 255);
+    var m = 1 - (g / 255);
+    var y = 1 - (b / 255);
+    var k = Math.min(c, Math.min(m, y));
+    c = ((c - k) / (1 - k) * 100);
+    m = ((m - k) / (1 - k) * 100);
+    y = ((y - k) / (1 - k) * 100);
+    k = Math.round(k * 100);
+    return [c.toFixed(2), m.toFixed(2), y.toFixed(2), k.toFixed(2)];
+
 }
