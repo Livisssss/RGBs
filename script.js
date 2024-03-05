@@ -56,7 +56,7 @@ function convertColors() {
 
         // Verificar se os campos de entrada estão preenchidos corretamente
         if (isNaN(red) || isNaN(green) || isNaN(blue)) {
-            alert("Por favor, insira valores numéricos válidos para RGB.");
+            alert("Por favor, insira valores numéricos válidos para RGB!!");
             return;
         }
 
