@@ -229,9 +229,9 @@ function convertNormalizaRGB() {
     var soma = red + green + blue;
 
     // Normalizar os valores dividindo pelo total
-    var resRed = (red / soma);
-    var resGreen = (green / soma);
-    var resBlue = (blue / soma);
+    var rNorm = (red / soma);
+    var gNorm = (green / soma);
+    var bNorm = (blue / soma);
 
     // Função para setar o valor 0 caso ele for NaN (dividido por zero)
     function seNan(valor) {
@@ -244,23 +244,23 @@ function convertNormalizaRGB() {
     }
    
     // Aplicar função de validação NaN
-    var resRed = seNan(resRed);
-    var resGreen = seNan(resGreen);
-    var resBlue = seNan(resBlue);
+    var rNorm = seNan(rNorm);
+    var gNorm = seNan(gNorm);
+    var bNorm = seNan(bNorm);
 
 
     // Arredondar os valores com uma casa decimal
-    resRed = resRed.toFixed(2);
-    resGreen = resGreen.toFixed(2);
-    resBlue = resBlue.toFixed(2);
+    rNorm = rNorm.toFixed(2);
+    gNorm = gNorm.toFixed(2);
+    bNorm = bNorm.toFixed(2);
 
     // Exibir o result da conversão
     document.getElementById('result').innerHTML = `
         <div>
             <div style="font-size: 20px; color: #34a4eb;">RGB normalizado:</div>
-            <div style="font-size: 16px;">R: ${resRed}</div>
-            <div style="font-size: 16px;">G: ${resGreen}</div>
-            <div style="font-size: 16px;">B: ${resBlue}</div>
+            <div style="font-size: 16px;">R: ${rNorm}</div>
+            <div style="font-size: 16px;">G: ${gNorm}</div>
+            <div style="font-size: 16px;">B: ${bNorm}</div>
         </div>`;
 }
 // OK ------------------------------------------
@@ -441,31 +441,28 @@ function convertCMYKparaRGB() {
     var magenta = parseFloat(document.getElementById('magenta').value) / 100;
     var yellow = parseFloat(document.getElementById('yellow').value) / 100;
     var black = parseFloat(document.getElementById('black').value) / 100;
-
+    
     // Verificar se os campos de input estão preenchidos corretamente
     if (isNaN(cyan) || isNaN(magenta) || isNaN(yellow) || isNaN(black)) {
         alert("Por favor, insira valores numéricos válidos para CYMK.");
         return;
     }
-
+    
     // Calcula os valores de RGB
     var red = 255 * (1 - cyan) * (1 - black);
     var green = 255 * (1 - magenta) * (1 - black);
     var blue = 255 * (1 - yellow) * (1 - black);
-
+    
     // Exibe o resultado e habilita uma c
     document.getElementById('result').innerHTML =
-        `<div>
-            <div style="font-size: 20px; color: #34a4eb;">RGB:</div>
-            <div style="font-size: 16px;">R: ${ Math.round(red)}</div>
-            <div style="font-size: 16px;">G: ${ Math.round(green)}</div>
-            <div style="font-size: 16px;">B: ${ Math.round(blue)}</div>
-        </div>`;
+    `<div>
+    <div style="font-size: 20px; color: #34a4eb;">RGB:</div>
+    <div style="font-size: 16px;">R: ${ Math.round(red)}</div>
+    <div style="font-size: 16px;">G: ${ Math.round(green)}</div>
+    <div style="font-size: 16px;">B: ${ Math.round(blue)}</div>
+    </div>`;
 }
-
-
-
-
+// OK ------------------------------------------
 function convertRGBparaCinza() {
     // Pegar o valor dos numeros digitados
     var red = parseInt(document.getElementById('red').value);
