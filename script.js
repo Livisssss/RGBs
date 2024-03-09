@@ -1,111 +1,98 @@
+// Função para 'reiniciar' a tela sempre que um tipo de conversão foi selecionada
 function atualizarTipoConversao() {
+    // Pegar os elementos a serem utilizados
     var tipoConversaoSelect = document.getElementById("tipoConversao");
-    var redEntrada = document.getElementById('red');
-    var greenEntrada = document.getElementById('green');
-    var blueEntrada = document.getElementById('blue');
+    var redInput = document.getElementById('red');
+    var greenInput = document.getElementById('green');
+    var blueInput = document.getElementById('blue');
     var resultDiv = document.getElementById('result');
-    var hueEntrada = document.getElementById("hue");
-    var saturationEntrada = document.getElementById("saturation");
-    var valueEntrada = document.getElementById("value");
-    var entradaPreto = document.getElementById("entradaPreto");
 
 
-    // Limpar os campos de entrada, se estiverem presentes
-    if (entradaPreto) {
-        entradaPreto.style.display = "none";
-    }
-    if (redEntrada) {
-        redEntrada.value = "";
-    }
-    if (greenEntrada) {
-        greenEntrada.value = "";
-    }
-    if (blueEntrada) {
-        blueEntrada.value = "";
-    }
-    if (hueEntrada) {
-        hueEntrada.value = "";
-    }
-    if (saturationEntrada) {
-        saturationEntrada.value = "";
-    }
-    if (valueEntrada) {
-        valueEntrada.value = "";
-    }
+    // Limpar os campos de input, se estiverem presentes
+    limparCampos();
 
-    // Limpar o conteúdo da div de result
+    // Limpar o conteúdo do resultado
     resultDiv.innerHTML = "";
 
-    // Atualizar os rótulos conforme a seleção
+    // Atualizar os labels conforme a seleção de conversão
     alterarLabels();
 
-    // Chamar a função limitarEntrada() para cada campo de entrada com o novo tipo de conversão
-    if (redEntrada && greenEntrada && blueEntrada) {
-        limitarEntrada(redEntrada, tipoConversaoSelect.value);
-        limitarEntrada(greenEntrada, tipoConversaoSelect.value);
-        limitarEntrada(blueEntrada, tipoConversaoSelect.value);
+    // Chamar a função limitarEntrada() para cada campo de input com o novo tipo de conversão
+    if (redInput && greenInput && blueInput) {
+        limitarEntrada(redInput, tipoConversaoSelect.value);
+        limitarEntrada(greenInput, tipoConversaoSelect.value);
+        limitarEntrada(blueInput, tipoConversaoSelect.value);
     }
 
     // Verificar se todos os elementos necessários foram encontrados
-    if (!tipoConversaoSelect || !redEntrada || !greenEntrada || !blueEntrada || !resultDiv) {
+    if (!tipoConversaoSelect || !redInput || !greenInput || !blueInput || !resultDiv) {
         console.error("Um ou mais elementos não foram encontrados:");
-        console.log("redEntrada:", redEntrada);
-        console.log("greenEntrada:", greenEntrada);
-        console.log("blueEntrada:", blueEntrada);
+        console.log("redInput:", redInput);
+        console.log("greenInput:", greenInput);
+        console.log("blueInput:", blueInput);
         return;
     }
 
+    // Para depois que sair da opção CMYK para RGB, a rotina de 'limpeza' seja ativada
     if (tipoConversaoSelect.value !== 'CMYKpRGB') {
         limparCampos();
     }
 }
 
+// Função para limpar todos os campos de input
 function limparCampos() {
-    var redEntrada = document.getElementById('red');
-    var greenEntrada = document.getElementById('green');
-    var blueEntrada = document.getElementById('blue');
-    var hueEntrada = document.getElementById("hue");
-    var saturationEntrada = document.getElementById("saturation");
-    var valueEntrada = document.getElementById("value");
-    var cyanEntrada = document.getElementById('cyan');
-    var magentaEntrada = document.getElementById("magenta");
-    var yellowEntrada = document.getElementById("yellow");
-    var blackEntrada = document.getElementById("black");
+    var redInput = document.getElementById('red');
+    var greenInput = document.getElementById('green');
+    var blueInput = document.getElementById('blue');
+    var hueInput = document.getElementById("hue");
+    var saturationInput = document.getElementById("saturation");
+    var valueInput = document.getElementById("value");
+    var cyanInput = document.getElementById('cyan');
+    var magentaInput = document.getElementById("magenta");
+    var yellowInput = document.getElementById("yellow");
+    var blackInput = document.getElementById("black");
 
-    if (redEntrada) {
-        redEntrada.value = "";
+    if (inputPreto) {
+        inputPreto.style.display = "none";
     }
-    if (greenEntrada) {
-        greenEntrada.value = "";
+    if (redInput) {
+        redInput.value = "";
     }
-    if (blueEntrada) {
-        blueEntrada.value = "";
+    if (greenInput) {
+        greenInput.value = "";
     }
-    if (hueEntrada) {
-        hueEntrada.value = "";
+    if (blueInput) {
+        blueInput.value = "";
     }
-    if (saturationEntrada) {
-        saturationEntrada.value = "";
+    if (hueInput) {
+        hueInput.value = "";
     }
-    if (valueEntrada) {
-        valueEntrada.value = "";
+    if (saturationInput) {
+        saturationInput.value = "";
     }
-    if (cyanEntrada) {
-        blueEntrada.value = "";
+    if (valueInput) {
+        valueInput.value = "";
     }
-    if (magentaEntrada) {
-        magentaEntrada.value = "";
+    if (cyanInput) {
+        cyanInput.value = "";
     }
-    if (yellowEntrada) {
-        yellowEntrada.value = "";
+    if (magentaInput) {
+        magentaInput.value = "";
     }
-    if (blackEntrada) {
-        blackEntrada.value = "";
+    if (yellowInput) {
+        yellowInput.value = "";
+    }
+    if (blackInput) {
+        blackInput.value = "";
     }
 }
 
+// Função para mudar o layout de acordo com a conversão
 function alterarLabels() {
+    // Buscar o tipo de conversão selecionado
     var tipoConversao = document.getElementById("tipoConversao").value;
+
+    // Caso for uma conversão HSV para RGB, o label trocará de RGB para a descrição de HSV, além disso muda o nome do id do campo input, para ser aplicado o limite de valor
     if (tipoConversao === "HSVpRGB") {
         var redLabel = document.querySelector("label[for='red']");
         var greenLabel = document.querySelector("label[for='green']");
@@ -115,14 +102,15 @@ function alterarLabels() {
             greenLabel.textContent = "S (%):";
             blueLabel.textContent = "V (%):";
         }
-        var redEntrada = document.getElementById("red");
-        var greenEntrada = document.getElementById("green");
-        var blueEntrada = document.getElementById("blue");
-        if (redEntrada && greenEntrada && blueEntrada) {
-            redEntrada.id = "hue";
-            greenEntrada.id = "saturation";
-            blueEntrada.id = "value";
+        var redInput = document.getElementById("red");
+        var greenInput = document.getElementById("green");
+        var blueInput = document.getElementById("blue");
+        if (redInput && greenInput && blueInput) {
+            redInput.id = "hue";
+            greenInput.id = "saturation";
+            blueInput.id = "value";
         }
+    // Caso for uma conversão CMYK para RGB, o label trocará de RGB para a descrição de CMYK e será inserido o campo BLACK, aqui pelo js, além disso muda o nome do id do campo input, para ser aplicado o limite de valor
     } else if (tipoConversao === "CMYKpRGB") {
         var redLabel = document.querySelector("label[for='red']");
         var greenLabel = document.querySelector("label[for='green']");
@@ -131,16 +119,18 @@ function alterarLabels() {
             redLabel.textContent = "Ciano (%):";
             greenLabel.textContent = "Magenta (%):";
             blueLabel.textContent = "Amarelo (%):";
+            document.getElementById("inputPreto").style.display = "block";
         }
-        var redEntrada = document.getElementById("red");
-        var greenEntrada = document.getElementById("green");
-        var blueEntrada = document.getElementById("blue");
-        if (redEntrada && greenEntrada && blueEntrada) {
-            redEntrada.id = "cyan";
-            greenEntrada.id = "magenta";
-            blueEntrada.id = "yellow";
-            document.getElementById("entradaPreto").style.display = "block"; // Exibe o campo preto
+        var redInput = document.getElementById("red");
+        var greenInput = document.getElementById("green");
+        var blueInput = document.getElementById("blue");
+        if (redInput && greenInput && blueInput) {
+            redInput.id = "cyan";
+            greenInput.id = "magenta";
+            blueInput.id = "yellow";
+            document.getElementById("inputPreto").style.display = "block";
         }
+    // Caso for as demais conversões o label permanece RGB ou voltará a ser RGB
     } else {
         // Alterar os rótulos de volta para "Red", "Green" e "Blue"
         var redLabel = document.querySelector("label[for='red']");
@@ -151,31 +141,44 @@ function alterarLabels() {
             greenLabel.textContent = "Green:";
             blueLabel.textContent = "Blue:";
         }
-        var redEntrada = document.getElementById("hue");
-        var greenEntrada = document.getElementById("saturation");
-        var blueEntrada = document.getElementById("value");
-        if (redEntrada && greenEntrada && blueEntrada) {
-            redEntrada.id = "red";
-            greenEntrada.id = "green";
-            blueEntrada.id = "blue";
+        var redInput = document.getElementById("hue");
+        var greenInput = document.getElementById("saturation");
+        var blueInput = document.getElementById("value");
+        if (redInput && greenInput && blueInput) {
+            redInput.id = "red";
+            greenInput.id = "green";
+            blueInput.id = "blue";
+        }
+        var redInput = document.getElementById("cyan");
+        var greenInput = document.getElementById("magenta");
+        var blueInput = document.getElementById("yellow");
+        if (redInput && greenInput && blueInput) {
+            redInput.id = "red";
+            greenInput.id = "green";
+            blueInput.id = "blue";
         }
     }
 }
 
+// Função para limitar o valor do input de acordo com a conversão
 function limitarEntrada(elemento, tipoConversao) {
+    // Identifica o valor inserido
     var value = parseInt(elemento.value);
-    var valueMaximo = 255; // value max para RGB
+    var valueMaximo = 255; // Valor max para RGB
 
+    // Se for de tipo HSV, hue vale 359 e value e saturation valem 100
     if (tipoConversao === 'HSVpRGB') {
         if (elemento.id === 'hue') { // H
             valueMaximo = 359;
         } else if (elemento.id === 'value' || elemento.id === 'saturation') { // S e V
             valueMaximo = 100;
         }
+    // Se for de tipo RGB fica max 255
     } else if (tipoConversao === 'RGBpHSV') {
         valueMaximo = 255;
+    // Se for de tipo HSVCMYK, deve valer 100 pois se trata de valores em porcentagem
     } else if (tipoConversao === 'CMYKpRGB') {
-        valueMaximo = 100; // porcentagem para as cores
+        valueMaximo = 100;
     }
 
     // Verifica se o elemento existe antes de tentar acessar sua propriedade value
@@ -184,6 +187,7 @@ function limitarEntrada(elemento, tipoConversao) {
     }
 }
 
+// Valida o tipo de conversão selecionado e aplica a função de cálculo para ele
 function converterCores() {
     var tipoConversao = document.getElementById('tipoConversao').value;
 
@@ -202,45 +206,77 @@ function converterCores() {
     }
 }
 
-
+//Funções de cálculo
+// OK ------------------------------------------
 function convertNormalizaRGB() {
+    // Pegar o valor dos numeros digitados
     var red = parseInt(document.getElementById('red').value);
     var green = parseInt(document.getElementById('green').value);
     var blue = parseInt(document.getElementById('blue').value);
 
-    // Limitar os valuees de entrada RGB a um máximo de 255
+    // Limitar os valores de input RGB a um máximo de 255
     red = Math.min(red, 255);
     green = Math.min(green, 255);
     blue = Math.min(blue, 255);
 
-    // Somar os valuees de R, G e B
+    // Verificar se os campos de input estão preenchidos corretamente
+    if (isNaN(red) || isNaN(green) || isNaN(blue)) {
+        alert("Por favor, insira valores numéricos válidos para RGB.");
+        return;
+    }
+   
+    // Somar os valores de R, G e B
     var soma = red + green + blue;
 
-    // Normalizar os valuees dividindo pelo total e multiplicando pelo value máximo de RGB
-    var resRed = (red / soma) * 255;
-    var resGreen = (green / soma) * 255;
-    var resBlue = (blue / soma) * 255;
+    // Normalizar os valores dividindo pelo total
+    var resRed = (red / soma);
+    var resGreen = (green / soma);
+    var resBlue = (blue / soma);
 
-    // Arredondar os valuees com uma casa decimal
-    resRed = resRed.toFixed(1);
-    resGreen = resGreen.toFixed(1);
-    resBlue = resBlue.toFixed(1);
+    // Função para setar o valor 0 caso ele for NaN (dividido por zero)
+    function seNan(valor) {
+        if (isNaN(valor)) {
+            valor = 0;
+        } else {
+            valor = valor;
+        }
+        return valor
+    }
+   
+    // Aplicar função de validação NaN
+    var resRed = seNan(resRed);
+    var resGreen = seNan(resGreen);
+    var resBlue = seNan(resBlue);
+
+
+    // Arredondar os valores com uma casa decimal
+    resRed = resRed.toFixed(2);
+    resGreen = resGreen.toFixed(2);
+    resBlue = resBlue.toFixed(2);
 
     // Exibir o result da conversão
-    document.getElementById('result').innerHTML =
-        `<div>
+    document.getElementById('result').innerHTML = `
+        <div>
             <div style="font-size: 20px; color: #34a4eb;">RGB normalizado:</div>
             <div style="font-size: 16px;">R: ${resRed}</div>
             <div style="font-size: 16px;">G: ${resGreen}</div>
             <div style="font-size: 16px;">B: ${resBlue}</div>
         </div>`;
 }
+// OK ------------------------------------------
 function convertRGBparaHSV() {
+    // Pegar o valor dos numeros digitados
     var red = parseInt(document.getElementById('red').value);
     var green = parseInt(document.getElementById('green').value);
     var blue = parseInt(document.getElementById('blue').value);
 
-    // Dividir os valuees R, G e B pelo seu value máximo para ter um value entre 0.0 e 1.0
+    // Verificar se os campos de input estão preenchidos corretamente
+    if (isNaN(red) || isNaN(green) || isNaN(blue)) {
+        alert("Por favor, insira valores numéricos válidos para RGB.");
+        return;
+    }
+    
+    // Dividir os valores R, G e B pelo seu value máximo para ter um value entre 0.0 e 1.0
     var r = red / 255;
     var g = green / 255;
     var b = blue / 255;
@@ -251,9 +287,7 @@ function convertRGBparaHSV() {
 
     // Calcular o value da matriz (H)
     var h;
-    if (max == min) {
-        h = 0;
-    } else if (max == r && g >= b) {
+    if (max == r && g >= b) {
         h = 60 * ((g - b) / (max - min)) + 0;
     } else if (max == r && g < b) {
         h = 60 * ((g - b) / (max - min)) + 360;
@@ -264,31 +298,54 @@ function convertRGBparaHSV() {
     }
 
     // Calcular a saturação (S)
-    var s = (max == 0) ? 0 : ((max - min) / max);
+    var s = ((max - min) / max);
 
-    // Calcular o value (V)
+    // Calcular o valor (V)
     var v = max;
 
-    // Arredondar os valuees HSV em um array, o S e o V são multiplicados por 100 para serem porcentagens e recebem uma casa decimal
+    // Função para setar o valor 0 caso ele for NaN (dividido por zero)
+    function seNan(valor) {
+        if (isNaN(valor)) {
+            valor = 0;
+        } else {
+            valor = valor;
+        }
+        return valor
+    }
+   
+    // Aplica a função de validação NaN
+    var h = seNan(h);
+    var s = seNan(s);
+    var v = seNan(v);
+
+    // Arredondar os valores HSV em um array, o S e o V são multiplicados por 100 para serem porcentagens e recebem uma casa decimal
     h = Math.round(h);
     s = (s * 100).toFixed(1);
     v = (v * 100).toFixed(1);
 
     // Exibir o result da conversão
-    document.getElementById('result').innerHTML =
-        `<div>
+    document.getElementById('result').innerHTML = `
+        <div>
             <div style="font-size: 20px; color: #34a4eb;">HSV:</div>
             <div style="font-size: 16px;">H: ${h}°</div>
             <div style="font-size: 16px;">S: ${s}%</div>
             <div style="font-size: 16px;">V: ${v}%</div>
         </div>`;
 }
+// OK ------------------------------------------
 function convertHSVparaRGB() {
+    // Pegar o valor dos numeros digitados
     var hue = parseFloat(document.getElementById('hue').value);
     var saturation = parseFloat(document.getElementById('saturation').value);
     var value = parseFloat(document.getElementById('value').value);
 
-    // Normalizar os valuees de S e V
+    // Verificar se os campos de input estão preenchidos corretamente
+    if (isNaN(hue) || isNaN(saturation) || isNaN(value)) {
+        alert("Por favor, insira valores numéricos válidos para HSV.");
+        return;
+    }
+
+    // Deixa os valores de S e V entre 0 e 1
     var s = saturation / 100;
     var v = value / 100;
 
@@ -297,7 +354,7 @@ function convertHSVparaRGB() {
     var x = c * (1 - Math.abs((hue / 60) % 2 - 1));
     var m = v - c;
 
-    // Calcular os valuees de R, G e B
+    // Calcular os valores de R, G e B
     var rgbPrime;
     if (0 <= hue && hue < 60) {
         rgbPrime = [c, x, 0];
@@ -313,86 +370,115 @@ function convertHSVparaRGB() {
         rgbPrime = [c, 0, x];
     }
 
-    // Calcular os valuees de R, G e B finais
+    // Calcular os valores de R, G e B finais
     var r = (rgbPrime[0] + m) * 255;
     var g = (rgbPrime[1] + m) * 255;
     var b = (rgbPrime[2] + m) * 255;
 
     // Exibir o result da conversão
-    document.getElementById('result').innerHTML =
-        `<div>
+    document.getElementById('result').innerHTML = `
+        <div>
             <div style="font-size: 20px; color: #34a4eb;">RGB:</div>
             <div style="font-size: 16px;">R: ${Math.round(r)}</div>
             <div style="font-size: 16px;">G: ${Math.round(g)}</div>
             <div style="font-size: 16px;">B: ${Math.round(b)}</div>
         </div>`;
 }
+// OK ------------------------------------------
 function convertRGBparaCMYK() {
+    // Pegar o valor dos numeros digitados
     var red = parseInt(document.getElementById('red').value);
     var green = parseInt(document.getElementById('green').value);
     var blue = parseInt(document.getElementById('blue').value);
 
-    // Verificar se os campos de entrada estão preenchidos corretamente
+    // Verificar se os campos de input estão preenchidos corretamente
     if (isNaN(red) || isNaN(green) || isNaN(blue)) {
-        alert("Por favor, insira valuees numéricos válidos para RGB.");
+        alert("Por favor, insira valores numéricos válidos para RGB.");
         return;
     }
 
-    // Convert RGB para CMYK
-    var c = 1 - (red / 255);
-    var m = 1 - (green / 255);
-    var y = 1 - (blue / 255);
-    var k = Math.min(c, Math.min(m, y));
-    c = ((c - k) / (1 - k) * 100);
-    m = ((m - k) / (1 - k) * 100);
-    y = ((y - k) / (1 - k) * 100);
-    k = Math.round(k * 100);
+    // Mudar os valores de RGB para de 0 a 1
+    var r = (red/255);
+    var g = (green/255);
+    var b = (blue/255);
 
-    // Arredonda os valuees CMYK para números inteiros
-    var cmykArredondado = [c.toFixed(2), m.toFixed(2), y.toFixed(2), k.toFixed(2)];
+    // Calculados os valores de blacK, Cyan, Magente e Yellow
+    var k = 1 - Math.max(r, g, b);
+    var c = (1-r-k) / (1-k);
+    var m = (1-g-k) / (1-k);
+    var y = (1-b-k) / (1-k);
 
-    // result da conversão, editado o style
-    document.getElementById('result').innerHTML =
-        `<div>
-        <div style="font-size: 20px; color: #34a4eb;">CMYK:</div>
-        <div style="font-size: 16px;">C: ${cmykArredondado[0]}%</div>
-        <div style="font-size: 16px;">M: ${cmykArredondado[1]}%</div>
-        <div style="font-size: 16px;">Y: ${cmykArredondado[2]}%</div>
-        <div style="font-size: 16px;">K: ${cmykArredondado[3]}%</div>
+    // Função para setar o valor 0 caso ele for NaN (dividido por zero)
+    function seNan(valor) {
+        if (isNaN(valor)) {
+            valor = 0;
+        } else {
+            valor = valor;
+        }
+        return valor
+    }
+   
+    // Aplicada a função para NaN    
+    var c = seNan(c);
+    var m = seNan(m);
+    var y = seNan(y);
+    var k = seNan(k);
+
+    // Resultado da conversão e editado o style
+    document.getElementById('result').innerHTML = `
+        <div>
+            <div style="font-size: 20px; color: #34a4eb;">CMYK:</div>
+            <div style="font-size: 16px;">C: ${c.toFixed(2)}</div>
+            <div style="font-size: 16px;">M: ${m.toFixed(2)}</div>
+            <div style="font-size: 16px;">Y: ${y.toFixed(2)}</div>
+            <div style="font-size: 16px;">K: ${k.toFixed(2)}</div>
         </div>`;
 }
+// OK ------------------------------------------
 function convertCMYKparaRGB() {
-    var cyan = parseFloat(document.getElementById('cyan').value) / 100; // Alterado de 'red' para 'cyan'
-    var magenta = parseFloat(document.getElementById('magenta').value) / 100; // Alterado de 'green' para 'magenta'
-    var yellow = parseFloat(document.getElementById('yellow').value) / 100; // Alterado de 'blue' para 'yellow'
-    var black = parseFloat(document.getElementById('black').value) / 100; // Adicionado o elemento 'black'
+    // Pegar o valor dos numeros digitados
+    var cyan = parseFloat(document.getElementById('cyan').value) / 100;
+    var magenta = parseFloat(document.getElementById('magenta').value) / 100;
+    var yellow = parseFloat(document.getElementById('yellow').value) / 100;
+    var black = parseFloat(document.getElementById('black').value) / 100;
 
-    // Calcula os valuees de RGB
+    // Verificar se os campos de input estão preenchidos corretamente
+    if (isNaN(cyan) || isNaN(magenta) || isNaN(yellow) || isNaN(black)) {
+        alert("Por favor, insira valores numéricos válidos para CYMK.");
+        return;
+    }
+
+    // Calcula os valores de RGB
     var red = 255 * (1 - cyan) * (1 - black);
     var green = 255 * (1 - magenta) * (1 - black);
     var blue = 255 * (1 - yellow) * (1 - black);
 
-    // Exibe o result
+    // Exibe o resultado e habilita uma c
     document.getElementById('result').innerHTML =
         `<div>
             <div style="font-size: 20px; color: #34a4eb;">RGB:</div>
-            <div style="font-size: 16px;">R: ${red.toFixed(1)}</div>
-            <div style="font-size: 16px;">G: ${green.toFixed(1)}</div>
-            <div style="font-size: 16px;">B: ${blue.toFixed(1)}</div>
+            <div style="font-size: 16px;">R: ${ Math.round(red)}</div>
+            <div style="font-size: 16px;">G: ${ Math.round(green)}</div>
+            <div style="font-size: 16px;">B: ${ Math.round(blue)}</div>
         </div>`;
 }
+
+
+
+
 function convertRGBparaCinza() {
+    // Pegar o valor dos numeros digitados
     var red = parseInt(document.getElementById('red').value);
     var green = parseInt(document.getElementById('green').value);
     var blue = parseInt(document.getElementById('blue').value);
 
-    // Verificar se os campos de entrada estão preenchidos corretamente
+    // Verificar se os campos de input estão preenchidos corretamente
     if (isNaN(red) || isNaN(green) || isNaN(blue)) {
-        alert("Por favor, insira valuees numéricos válidos para RGB.");
+        alert("Por favor, insira valores numéricos válidos para RGB.");
         return;
     }
 
-    // Calcular a média dos valuees RGB para obter a intensidade da escala de cinza
+    // Calcular a média dos valores RGB para obter a intensidade da escala de cinza
     var cinza = (red + green + blue) / 3;
 
     // Exibir o resultado em escala de cinza
